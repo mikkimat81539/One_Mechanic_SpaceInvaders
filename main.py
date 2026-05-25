@@ -63,6 +63,7 @@ async def main():
 			self.rect.center = (self.x_pos, self.y_pos)
 			self.speed = 5
 
+		# DRAW AMMO
 		def drawAmmo(self, surface):
 			pygame.draw.rect(surface, self.color, self.rect)
 		
