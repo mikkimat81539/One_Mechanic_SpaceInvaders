@@ -7,7 +7,10 @@ async def main():
 	clock = pygame.time.Clock()
 
 	# SCREEN
-	screen = pygame.display.set_mode((500, 300))
+	screen_w = 800
+	screen_h = 600
+
+	screen = pygame.display.set_mode((screen_w, screen_h))
 	pygame.display.set_caption("Chase and Shoot")
 
 
@@ -48,12 +51,12 @@ async def main():
 				self.rect.x -= self.speed
 
 			# PLAYER BORDERS
-			if self.rect.x > 475:
+			if self.rect.x > screen_w - 25:
 				self.rect.x -= self.speed
 			if self.rect.x < 5:
 				self.rect.x += self.speed
 
-			if self.rect.y > 275:
+			if self.rect.y > screen_h - 25:
 				self.rect.y -= self.speed
 			if self.rect.y < 5:
 				self.rect.y += self.speed
