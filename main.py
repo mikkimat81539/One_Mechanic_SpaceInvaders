@@ -9,6 +9,7 @@ async def main():
 	# SCREEN
 	screen = pygame.display.set_mode((500, 300))
 
+
 	# OBJECT CLASS
 	class Objects:
 		def __init__(self, x_pos, y_pos, width, height, color):
