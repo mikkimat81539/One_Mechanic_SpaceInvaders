@@ -75,10 +75,27 @@ async def main():
 			super().__init__(x_pos, y_pos, width, height, color)
 			self.rect = pygame.Rect((self.x_pos, self.y_pos), (self.width, self.height))
 			self.speed = 3
-	
+
 
 		def drawEnemy(self, surface):
 			pygame.draw.rect(surface, self.color, self.rect)
+
+
+		def moveEnemy(self, player):
+			playerVector = pygame.math.Vector2(player.rect.x, player.rect.y)
+			enemyVector = pygame.math.Vector2(self.rect.x, self.rect.y)
+
+			# direction from enemy to player
+			direction = playerVector - enemyVector			
+
+			# prevent division by zero 
+			if direction.length() != 0:
+				direction = direction.normalize()
+
+			self.rect.x += direction.x * self.speed
+			self.rect.y += direction.y * self.speed
+
+
 	
 	# PLAYER
 	player = Player(150, 10, 20, 20, "black")
@@ -109,6 +126,9 @@ async def main():
 		# Ammo Movement
 		for i in ammoList:
 			i.rect.x += i.speed
+
+		# Enemy Movement
+		enemy.moveEnemy(player)
 
 		# DRAW OBJECTS
 		player.drawPlayer(screen)
