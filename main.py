@@ -8,6 +8,7 @@ async def main():
 
 	# SCREEN
 	screen = pygame.display.set_mode((500, 300))
+	pygame.display.set_caption("Chase and Shoot")
 
 
 	# OBJECT CLASS
@@ -56,24 +57,37 @@ async def main():
 				self.rect.y -= self.speed
 			if self.rect.y < 5:
 				self.rect.y += self.speed
-	
+	# AMMO CLASS
 	class Ammo(Objects):
 		def __init__(self, x_pos, y_pos, width, height, color):
 			super().__init__(x_pos, y_pos, width, height, color)
 			self.rect = pygame.Rect((0, 0), (self.width, self.height))
 			self.rect.center = (self.x_pos, self.y_pos)
-			self.speed = 5
+			self.speed = 3
 
 		# DRAW AMMO
 		def drawAmmo(self, surface):
 			pygame.draw.rect(surface, self.color, self.rect)
-		
+
+	# ENEMY CLASS
+	class Enemy(Objects):
+		def __init__(self, x_pos, y_pos, width, height, color):
+			super().__init__(x_pos, y_pos, width, height, color)
+			self.rect = pygame.Rect((self.x_pos, self.y_pos), (self.width, self.height))
+			self.speed = 3
+	
+
+		def drawEnemy(self, surface):
+			pygame.draw.rect(surface, self.color, self.rect)
+	
 	# PLAYER
-	player = Player(10, 10, 20, 20, "black")
+	player = Player(150, 10, 20, 20, "black")
 
 	# AMMO
-
 	ammoList = []
+
+	# ENEMY
+	enemy = Enemy(5, 100, 50, 50, "green")
 
 	# MAIN LOOP
 	running = True
@@ -98,6 +112,8 @@ async def main():
 
 		# DRAW OBJECTS
 		player.drawPlayer(screen)
+
+		enemy.drawEnemy(screen)
 
 		for i in ammoList:
 			i.drawAmmo(screen)
