@@ -1,4 +1,4 @@
-# Creating One Mechanic at a time for space invaders
+# Creating One Mechanic at a time for Space Invaders
 
 - Player movement
 - Shooting bullets
