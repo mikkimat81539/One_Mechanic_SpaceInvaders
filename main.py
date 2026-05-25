@@ -71,6 +71,7 @@ async def main():
 	player = Player(10, 10, 20, 20, "black")
 
 	# AMMO
+
 	ammoList = []
 
 	# MAIN LOOP
