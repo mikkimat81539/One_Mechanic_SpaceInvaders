@@ -1,4 +1,4 @@
-import pygame
+import pygame, asyncio
 
 pygame.init()
 
@@ -55,8 +55,26 @@ async def main():
 				self.rect.y -= self.speed
 			if self.rect.y < 5:
 				self.rect.y += self.speed
+	
+	class Ammo(Objects):
+		def __init__(self, x_pos, y_pos, width, height, color):
+			super().__init__(x_pos, y_pos, width, height, color)
+			self.rect = pygame.Rect((0, 0), (self.width, self.height))
+			self.rect.center = (x_pos, y_pos)
+			self.speed = 5
+
+		def drawAmmo(self, surface):
+			pygame.draw.rect(surface, self.color, self.rect)
+		
+		def shootAmmo(self):
+			pass
+
 	# PLAYER
 	player = Player(10, 10, 20, 20, "black")
+
+	# AMMO
+
+	ammo = Ammo(player.rect.centerx, player.rect.centery, 10, 10, "red")
 
 	# MAIN LOOP
 	running = True
@@ -73,6 +91,8 @@ async def main():
 
 		# DRAW OBJECTS
 		player.drawPlayer(screen)
+
+		ammo.drawAmmo(screen)
 
 		pygame.display.update()
 
