@@ -25,6 +25,13 @@ async def main():
 			super().__init__(x_pos, y_pos, width, height, color)
 			self.rect = pygame.Rect((self.x_pos, self.y_pos), (self.width, self.height))
 			self.speed = 5
+#			self.moving_left = False
+#			self.moving_right = False
+#			self.moving_up = False
+#			self.moving_down = False
+
+			self.dx, self.dy = 1, 0
+		
 
 		# DRAW PLAYER
 		def drawPlayer(self, surface):
@@ -58,16 +65,23 @@ async def main():
 				self.rect.y += self.speed
 	
 	class Ammo(Objects):
-		def __init__(self, x_pos, y_pos, width, height, color):
+		def __init__(self, x_pos, y_pos, width, height, color, dx, dy):
 			super().__init__(x_pos, y_pos, width, height, color)
 			self.rect = pygame.Rect((0, 0), (self.width, self.height))
 			self.rect.center = (self.x_pos, self.y_pos)
-			self.speed = 5
+			self.speed = 5 
+		
+			self.dx = dx
+			self.dy = dy
 
 		# DRAW AMMO
 		def drawAmmo(self, surface):
 			pygame.draw.rect(surface, self.color, self.rect)
-		
+
+		def moveAmmo(self):
+			self.rect.x += self.dx * self.speed
+			self.rect.y += self.dy * self.speed
+				
 	# PLAYER
 	player = Player(10, 10, 20, 20, "black")
 
@@ -75,33 +89,65 @@ async def main():
 
 	ammoList = []
 
+	def move(player):
+		keys = pygame.key.get_pressed()
+		
+		if keys[pygame.K_LEFT]: player.dx, player.dy = -1, 0
+		elif keys[pygame.K_RIGHT]: player.dx, player.dy = 1, 0
+		elif keys[pygame.K_UP]: player.dx, player.dy = 0, -1
+		elif keys[pygame.K_DOWN]: player.dx, player.dy = 0, 1
+
+	def shoot(player, ammoList):
+		ammo = Ammo(player.rect.centerx, player.rect.centery, 10, 10, "red", player.dx, player.dy)
+		ammoList.append(ammo)
+
+#		if player.moving_left:
+#			ammo = Ammo(player.rect.centerx, player.rect.centery, 10, 10, "red", -1, 0)
+#			ammoList.append(ammo)
+#
+#		elif player.moving_right:
+#			ammo = Ammo(player.rect.centerx, player.rect.centery, 10, 10, "red", 1, 0)
+#			ammoList.append(ammo)
+#
+#		elif player.moving_up:
+#			ammo = Ammo(player.rect.centerx, player.rect.centery, 10, 10, "red", 0, -1)
+#			ammoList.append(ammo)
+#
+#		elif player.moving_down:
+#			ammo = Ammo(player.rect.centerx, player.rect.centery, 10, 10, "red", 0, 1)
+#			ammoList.append(ammo)
+
+
 	# MAIN LOOP
 	running = True
 
 	while running:
+		move(player)
+		
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				running = False
 
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE:
-					ammoList.append(Ammo(player.rect.centerx, player.rect.centery, 10, 10, "red"))
+					shoot(player, ammoList)
 
 		screen.fill("white")
 
 		# Player Movement
 		player.movePlayer()
 
+
 		# Ammo Movement
 		for i in ammoList:
-			i.rect.x += i.speed
+			i.moveAmmo()
 
 		# DRAW OBJECTS
-		player.drawPlayer(screen)
-
 		for i in ammoList:
 			i.drawAmmo(screen)
 
+		player.drawPlayer(screen)
+		
 		pygame.display.update()
 
 		clock.tick(60)
