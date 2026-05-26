@@ -141,10 +141,9 @@ async def main():
 		# Ammo Movement
 		for i in ammoList:
 			i.moveAmmo()
+			i.drawAmmo(screen)
 
 		# DRAW OBJECTS
-		for i in ammoList:
-			i.drawAmmo(screen)
 
 		player.drawPlayer(screen)
 		
