@@ -24,7 +24,7 @@ async def main():
 		def __init__(self, x_pos, y_pos, width, height, color):
 			super().__init__(x_pos, y_pos, width, height, color)
 			self.rect = pygame.Rect((self.x_pos, self.y_pos), (self.width, self.height))
-			self.speed = 5
+			self.speed = 10
 			self.dx, self.dy = 1, 0
 		
 
@@ -136,6 +136,14 @@ async def main():
 	enemy = Enemy(5, 100, 50, 50, "green")
 
 
+	# COLLISION
+	def collisions(player, enemy):
+		collide = enemy.rect.colliderect(player.rect)
+		if collide:
+			enemy.color = "orange"
+		else:
+			enemy.color = "green"
+
 	# MAIN LOOP
 	running = True
 
@@ -163,6 +171,9 @@ async def main():
 
 		# Enemy Movement
 		enemy.moveEnemy(player)
+
+		# Collision Call
+		collisions(player, enemy)
 
 		# DRAW OBJECTS
 		player.drawPlayer(screen)
