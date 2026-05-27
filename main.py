@@ -195,7 +195,6 @@ async def main():
 
 			if i.rect.colliderect(enemy.rect): # ammo hitting enemy
 				enemy.color = "brown"
-				print(enemy.color)
 
 		enemy.drawEnemy(screen)
 
