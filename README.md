@@ -4,8 +4,8 @@
 - Shooting bullets
 - Enemies moving toward player
 - Collision detection
-- Add Platforms
 - Camera Use
+- Add Platforms
 - Health system
 - Score system
 - Waves/spawning
