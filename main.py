@@ -68,7 +68,7 @@ async def main():
 			super().__init__(x_pos, y_pos, width, height, color)
 			self.rect = pygame.Rect((0, 0), (self.width, self.height))
 			self.rect.center = (self.x_pos, self.y_pos)
-			self.speed = 25 
+			self.speed = 15 
 		
 			self.dx = dx
 			self.dy = dy
@@ -88,7 +88,7 @@ async def main():
 		def __init__(self, x_pos, y_pos, width, height, color):
 			super().__init__(x_pos, y_pos, width, height, color)
 			self.rect = pygame.Rect((self.x_pos, self.y_pos), (self.width, self.height))
-			self.speed = 3
+			self.speed = 0
 
 
 		def drawEnemy(self, surface):
@@ -130,9 +130,17 @@ async def main():
 		elif keys[pygame.K_DOWN]:
 			player.dx, player.dy = 0, 1
 
-	def shoot(player, ammoList):
+	def shoot(player, ammoList, enemy):
 		ammo = Ammo(player.rect.centerx, player.rect.centery, 5, 5, "red", player.dx, player.dy)
 		ammoList.append(ammo)
+
+		collide = ammo.rect.colliderect(enemy.rect)
+
+		if collide:
+			enemy.color = "brown"
+#		else:
+#			enemy.color = "green"
+
 
 
 	# ENEMY
@@ -141,7 +149,8 @@ async def main():
 
 	# COLLISION
 	def collisions(player, enemy):
-		collide = enemy.rect.colliderect(player.rect)
+		collide = enemy.rect.colliderect(player.rect) # Player colliding with enemy
+
 		if collide:
 			enemy.color = "orange"
 		else:
@@ -157,14 +166,20 @@ async def main():
 			if event.type == pygame.QUIT:
 				running = False
 
-			if event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_SPACE:
-					shoot(player, ammoList)
+#			if event.type == pygame.KEYDOWN:
+#				if event.key == pygame.K_SPACE:
+#					shoot(player, ammoList, enemy)
 
 		screen.fill("white")
 
 		# Player Movement
 		player.movePlayer()
+
+
+		# AMMO SHOT
+		keys = pygame.key.get_pressed()
+		if keys[pygame.K_SPACE]:
+			shoot(player, ammoList, enemy)
 
 
 		# Ammo Movement
@@ -175,7 +190,7 @@ async def main():
 		# Enemy Movement
 		enemy.moveEnemy(player)
 
-		# Collision Call
+		# Collision call for player
 		collisions(player, enemy)
 
 		# DRAW OBJECTS
