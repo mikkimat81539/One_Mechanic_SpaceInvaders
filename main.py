@@ -176,10 +176,7 @@ async def main():
 		# Ammo Movement
 		for i in ammoList:
 			i.moveAmmo()
-			i.drawAmmo(screen)
 
-			if i.rect.colliderect(enemy.rect): # ammo hitting enemy
-				enemy.color = "brown"
 
 		# Enemy Movement
 		enemy.moveEnemy(player)
@@ -190,6 +187,16 @@ async def main():
 		# DRAW OBJECTS
 		player.drawPlayer(screen)
 		
+		enemy.drawEnemy(screen)
+
+		# Enemy Ammo Collision	
+		for i in ammoList:
+			i.drawAmmo(screen)
+
+			if i.rect.colliderect(enemy.rect): # ammo hitting enemy
+				enemy.color = "brown"
+				print(enemy.color)
+
 		enemy.drawEnemy(screen)
 
 		pygame.display.update()
