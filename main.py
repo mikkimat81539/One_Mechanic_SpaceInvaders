@@ -130,18 +130,9 @@ async def main():
 		elif keys[pygame.K_DOWN]:
 			player.dx, player.dy = 0, 1
 
-	def shoot(player, ammoList, enemy):
+	def shoot(player, ammoList):
 		ammo = Ammo(player.rect.centerx, player.rect.centery, 5, 5, "red", player.dx, player.dy)
 		ammoList.append(ammo)
-
-		collide = ammo.rect.colliderect(enemy.rect)
-
-		if collide:
-			enemy.color = "brown"
-#		else:
-#			enemy.color = "green"
-
-
 
 	# ENEMY
 	enemy = Enemy(5, 100, 30, 30, "green")
@@ -168,7 +159,7 @@ async def main():
 
 #			if event.type == pygame.KEYDOWN:
 #				if event.key == pygame.K_SPACE:
-#					shoot(player, ammoList, enemy)
+#					shoot(player, ammoList)
 
 		screen.fill("white")
 
@@ -178,14 +169,17 @@ async def main():
 
 		# AMMO SHOT
 		keys = pygame.key.get_pressed()
-		if keys[pygame.K_SPACE]:
-			shoot(player, ammoList, enemy)
 
+		if keys[pygame.K_SPACE]:
+			shoot(player, ammoList)
 
 		# Ammo Movement
 		for i in ammoList:
 			i.moveAmmo()
 			i.drawAmmo(screen)
+
+			if i.rect.colliderect(enemy.rect): # ammo hitting enemy
+				enemy.color = "brown"
 
 		# Enemy Movement
 		enemy.moveEnemy(player)
