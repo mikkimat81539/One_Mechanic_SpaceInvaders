@@ -196,7 +196,7 @@ async def main():
 			if i.rect.colliderect(enemy.rect): # ammo hitting enemy
 				enemy.color = "brown"
 
-		enemy.drawEnemy(screen)
+		enemy.drawEnemy(screen) # redraw enemy to update color
 
 		pygame.display.update()
 
