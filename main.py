@@ -88,7 +88,7 @@ async def main():
 		def __init__(self, x_pos, y_pos, width, height, color):
 			super().__init__(x_pos, y_pos, width, height, color)
 			self.rect = pygame.Rect((self.x_pos, self.y_pos), (self.width, self.height))
-			self.speed = 0
+			self.speed = 3
 
 
 		def drawEnemy(self, surface):
