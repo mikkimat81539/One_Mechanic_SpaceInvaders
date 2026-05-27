@@ -7,7 +7,10 @@ async def main():
 	clock = pygame.time.Clock()
 
 	# SCREEN
-	screen = pygame.display.set_mode((500, 300))
+	screen_w = 800
+	screen_h = 600
+
+	screen = pygame.display.set_mode((screen_w, screen_h))
 
 
 	# OBJECT CLASS
@@ -49,12 +52,12 @@ async def main():
 				self.rect.x -= self.speed
 
 			# PLAYER BORDERS
-			if self.rect.x > 475:
+			if self.rect.x > 785:
 				self.rect.x -= self.speed
 			if self.rect.x < 5:
 				self.rect.x += self.speed
 
-			if self.rect.y > 275:
+			if self.rect.y > 585:
 				self.rect.y -= self.speed
 			if self.rect.y < 5:
 				self.rect.y += self.speed
@@ -107,7 +110,7 @@ async def main():
 			self.rect.y += direction.y * self.speed
 				
 	# PLAYER
-	player = Player(10, 10, 20, 20, "black")
+	player = Player(10, 10, 10, 10, "black")
 
 	# AMMO
 	ammoList = []
@@ -128,12 +131,12 @@ async def main():
 			player.dx, player.dy = 0, 1
 
 	def shoot(player, ammoList):
-		ammo = Ammo(player.rect.centerx, player.rect.centery, 10, 10, "red", player.dx, player.dy)
+		ammo = Ammo(player.rect.centerx, player.rect.centery, 5, 5, "red", player.dx, player.dy)
 		ammoList.append(ammo)
 
 
 	# ENEMY
-	enemy = Enemy(5, 100, 50, 50, "green")
+	enemy = Enemy(5, 100, 30, 30, "green")
 
 
 	# COLLISION
