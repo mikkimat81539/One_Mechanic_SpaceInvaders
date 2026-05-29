@@ -108,7 +108,12 @@ async def main():
 
 			self.rect.x += direction.x * self.speed
 			self.rect.y += direction.y * self.speed
-				
+			
+	
+	# CAMERA CLASS
+	class Camera:
+		pass
+#	
 	# PLAYER
 	player = Player(10, 10, 10, 10, "black")
 
